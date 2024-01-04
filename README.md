@@ -58,7 +58,7 @@ APP_URL=http://localhost:8000
 Lanjut lakukan proses migrate melalui terminal
 
 ```
-php artisan migrate
+php artisan migrate:fresh --seed
 ```
 
 Lanjut, generate key
