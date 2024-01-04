@@ -17,17 +17,16 @@
                     <div>
                         <div class="relative">
                             <img class="object-cover object-center w-full h-64 rounded-lg lg:h-80"
-                                src="{{ $post->banner_url }}"
-                                alt="{{ $post->title }}">
+                                src="{{ $post->banner_url }}" alt="{{ $post->title }}">
 
                             <div class="absolute bottom-0 flex p-3 bg-white dark:bg-gray-900 rounded-tr-lg">
                                 <img class="object-cover object-center w-10 h-10 rounded-full"
-                                    src="{{ $post->author->photo_url }}"
-                                    alt="{{ $post->author->name }}">
+                                    src="{{ $post->author->photo_url }}" alt="{{ $post->author->name }}">
 
                                 <div class="mx-4">
                                     <h1 class="text-sm text-gray-700 dark:text-gray-200">{{ $post->author->name }}</h1>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400">{{ $post->created_at->diffForHumans() }}</p>
+                                    <p class="text-sm text-gray-500 dark:text-gray-400">
+                                        {{ $post->created_at->diffForHumans() }}</p>
                                 </div>
                             </div>
                         </div>
@@ -42,7 +41,8 @@
                             {{ $post->excerpt }}
                         </p>
 
-                        <a href="{{ route('posts.show', $post->slug) }}" class="inline-block mt-4 text-blue-500 underline hover:text-blue-400">Read
+                        <a href="{{ route('posts.show', $post->slug) }}"
+                            class="inline-block mt-4 text-blue-500 underline hover:text-blue-400">Read
                             more</a>
                     </div>
                 @empty
