@@ -17,7 +17,8 @@ class PostController extends Controller
     public function index()
     {
         return view('posts.index', [
-            'posts' => Post::filter(request(['search']))->get()
+            'posts' => Post::filter(request(['search', 'category', 'author']))->get(),
+            'categories' => \Stephenjude\FilamentBlog\Models\Category::all()
         ]);
     }
 
