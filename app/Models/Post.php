@@ -24,6 +24,58 @@ class Post extends \Stephenjude\FilamentBlog\Models\Post
         }));
     }
 
+    public static function getRelatedPosts(Post $post, int $count = 4, bool $shuffle = false)
+    {
+        $relatedPosts = collect();
+        $allPosts = Post::all();
+
+        foreach ($allPosts as $otherPost) {
+            if ($otherPost->id != $post->id) {
+                similar_text($otherPost->title, $post->title, $percent);
+
+                if ($percent > 10) {
+                    $relatedPosts->push($otherPost);
+
+                    if ($relatedPosts->count() == $count) {
+                        return $relatedPosts->shuffle();
+                    }
+                }
+            }
+        }
+
+        if ($relatedPosts->count() < $count) {
+            $sameCategoryPosts = Post::where('blog_category_id', $post->blog_category_id)
+            ->whereNot('id', $post->id)
+            ->whereNotIn('id', $relatedPosts->pluck('id')->toArray())
+            ->take($count - $relatedPosts->count())
+            ->get();
+
+            $relatedPosts = $relatedPosts->concat($sameCategoryPosts);
+        }
+
+        if ($relatedPosts->count() < $count) {
+            $sameAuthorPosts = Post::where('blog_author_id', $post->blog_author_id)
+            ->whereNot('id', $post->id)
+            ->whereNotIn('id', $relatedPosts->pluck('id')->toArray())
+            ->take($count - $relatedPosts->count())
+            ->get();
+
+            $relatedPosts = $relatedPosts->concat($sameAuthorPosts);
+        }
+
+        if ($relatedPosts->count() < $count) {
+            $randomPosts = Post::whereNot('id', $post->id)
+            ->whereNotIn('id', $relatedPosts->pluck('id')->toArray())
+            ->inRandomOrder()
+            ->take($count - $relatedPosts->count())
+            ->get();
+
+            $relatedPosts = $relatedPosts->concat($randomPosts);
+        }
+
+        return $shuffle ? $relatedPosts->shuffle() : $relatedPosts;
+    }
+
     public function getRouteKeyName(): string
     {
         return 'slug';
