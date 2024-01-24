@@ -4,6 +4,7 @@
 Daftar Isi 
 - [Kebutuhan](#kebutuhan)   
 - [Langkah Menjalankan](#menjalankan)
+- [Login](#login)
 - [Kontribusi](#kontribusi)
 
 ## Development
@@ -80,6 +81,11 @@ php artisan serve
 ```
 
 Silakan dibuka di <code>http://127.0.0.1:8000</code>
+
+
+### Login
+- Email = umar@example.com
+- Password = 12345678
 
 
 ### Kontribusi
